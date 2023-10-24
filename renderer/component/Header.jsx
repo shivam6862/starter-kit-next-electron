@@ -8,9 +8,11 @@ const Header = ({ href, page }) => {
   const [isdark, setIsDark] = useState(true);
 
   useEffect(() => {
-    window.ipc.on("dark-mode:system", (response) => {
+    const deafultTheme = async () => {
+      const response = await window.darkMode.system();
       setIsDark(response);
-    });
+    };
+    deafultTheme();
     return () => {
       window.ipc.removeAllListeners("dark-mode:system");
     };

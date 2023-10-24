@@ -20,13 +20,15 @@ if (isProd) {
   app.setPath("userData", `${app.getPath("userData")} (development)`);
 }
 
+var mainWindow = "";
+var currentTheme = "";
 // Main asynchronous function
 (async () => {
   // Wait until Electron app is ready
   await app.whenReady();
 
   // Create a main window with specified options
-  const mainWindow = createWindow("main", {
+  const mainWindowObject = createWindow("main", {
     width: 950,
     height: 600,
     title: TITLE,
@@ -36,6 +38,9 @@ if (isProd) {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  mainWindow = mainWindowObject.win;
+  currentTheme = mainWindowObject.currentTheme;
 
   // Code for Menu
   const menu = Menu.buildFromTemplate(ownMenu);
@@ -111,8 +116,9 @@ ipcMain.handle("dark-mode:toggle", () => {
 });
 
 ipcMain.handle("dark-mode:system", () => {
-  nativeTheme.themeSource = "system";
-  return nativeTheme.shouldUseDarkColors;
+  if (currentTheme == undefined) nativeTheme.themeSource = "system";
+  else nativeTheme.themeSource = currentTheme;
+  return nativeTheme.themeSource == "dark" ? true : false;
 });
 
 // 3.. Notification
