@@ -51,6 +51,6 @@ You can customize the application further by modifying the existing codebase and
 
 ## Support and Contributions ❤️
 
-If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/shivam6862/next-electron-starter/issues) on GitHub. Contributions via pull requests are also welcome!
+If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/shivam6862/starter-kit-next-electron/issues) on GitHub. Contributions via pull requests are also welcome!
 
 🎉 🎉 Happy coding! 🎉 🎉

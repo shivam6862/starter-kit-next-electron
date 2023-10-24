@@ -5,7 +5,7 @@ import Image from "next/image";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const Header = ({ href, page }) => {
-  const [isdark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const deafultTheme = async () => {
@@ -13,9 +13,6 @@ const Header = ({ href, page }) => {
       setIsDark(response);
     };
     deafultTheme();
-    return () => {
-      window.ipc.removeAllListeners("dark-mode:system");
-    };
   }, []);
 
   const handleChangeTheme = async () => {
@@ -34,10 +31,10 @@ const Header = ({ href, page }) => {
           <Link href={`${href}`}>Explorer</Link>
         </div>
         <div className={classes.day_night_mode}>
-          {isdark ? (
-            <BsMoonFill color="#fff" size={25} onClick={handleChangeTheme} />
-          ) : (
+          {!isDark ? (
             <BsSunFill color="#fff" size={25} onClick={handleChangeTheme} />
+          ) : (
+            <BsMoonFill color="#fff" size={25} onClick={handleChangeTheme} />
           )}
         </div>
       </div>

@@ -111,8 +111,10 @@ ipcMain.on("message", async (event, arg) => {
 
 // 2. EXTRA FUNCTION FOR DARK-MODE AND LIGHT-MODE
 ipcMain.handle("dark-mode:toggle", () => {
-  nativeTheme.themeSource = nativeTheme.shouldUseDarkColors ? "light" : "dark";
-  return nativeTheme.shouldUseDarkColors;
+  const currentColor = nativeTheme.shouldUseDarkColors;
+  nativeTheme.themeSource = currentColor ? "light" : "dark";
+  currentTheme = currentColor ? "light" : "dark";
+  return currentColor ? false : true;
 });
 
 ipcMain.handle("dark-mode:system", () => {
