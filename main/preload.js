@@ -1,7 +1,7 @@
 // Import required modules from Electron
 import { contextBridge, ipcRenderer } from "electron";
 
-// Define an object with methods for sending and receiving IPC messages
+// 1. Define an object with methods for sending and receiving IPC messages
 const handler = {
   // Method to send IPC messages from the renderer process to the main process
   send(channel, value) {
@@ -25,3 +25,14 @@ const handler = {
 
 // Expose the defined IPC methods in the main world context of the renderer process
 contextBridge.exposeInMainWorld("ipc", handler);
+
+// 2. THEME COLOR
+contextBridge.exposeInMainWorld("darkMode", {
+  toggle: async () => {
+    const response = await ipcRenderer.invoke("dark-mode:toggle");
+    return response;
+  },
+  system: async () => {
+    await ipcRenderer.invoke("dark-mode:system");
+  },
+});
