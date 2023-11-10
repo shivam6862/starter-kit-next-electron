@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import classes from "../styles/Header.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import socketIoClient from "socket.io-client";
 import { BsMoonFill, BsSunFill } from "react-icons/bs";
 
 const Header = ({ href, page }) => {
@@ -19,6 +20,23 @@ const Header = ({ href, page }) => {
     const response = await window.darkMode.toggle();
     setIsDark(response);
   };
+
+  const [socket, setSocket] = useState(null);
+  useEffect(() => {
+    const establishSocketConnection = async () => {
+      const socket = socketIoClient(`http://127.0.0.1:8000`, {});
+      console.log(socket);
+      setSocket(socket);
+      socket.emit("serialData", "value");
+      socket.on("messagesForYou", (response) => {
+        console.log(response);
+      });
+      socket.on("messagesUpdated", (response) => {
+        console.log(response);
+      });
+    };
+    establishSocketConnection();
+  }, []);
 
   return (
     <div className={classes.header}>

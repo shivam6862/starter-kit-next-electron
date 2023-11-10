@@ -36,3 +36,10 @@ contextBridge.exposeInMainWorld("darkMode", {
     return await ipcRenderer.invoke("dark-mode:system");
   },
 });
+
+// 3. OPEN EXTERNAL LINKS
+contextBridge.exposeInMainWorld("openLinkInWeb", {
+  openLinkInWebPage: async (link) => {
+    return ipcRenderer.invoke("externals-links:open", link);
+  },
+});
